@@ -51,9 +51,22 @@ const validatePassword = (password) => {
   return true;
 };
 
+const validateCategory = (name) => {
+  if (!name || name === '') {
+    return {
+      err: {
+        status: 400,
+        message: '"name" is required',
+      },
+    };
+  }
+  return true;
+};
+
 module.exports = {
   validateName,
   validateEmail,
   validatePassword,
+  validateCategory,
   generateToken,
 };
