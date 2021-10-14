@@ -17,8 +17,9 @@ const {
 } = require('../middlewares/validationMiddlewares');
 
 const findEmail = async (email) => {
+  console.log('aqui');
   const emailExistes = await User.findOne({ where: { email } });
-  if (emailExistes) {
+  if (emailExistes !== null) {
     return { err: {
       status: 409,
       message: 'User already registered',
@@ -28,10 +29,11 @@ const findEmail = async (email) => {
 };
 
 const createUser = async ({ displayName, email, password, image }) => {
-  if (validateName(displayName).err) return validateName(displayName).err;
-  if (validateEmail(email).err) return validateEmail(email).err;
-  if (validatePassword(password).err) return validatePassword(password).err;
-  if (findEmail(email).err) return findEmail(email).err;
+  if (validateName(displayName).err) return validateName(displayName);
+  if (validateEmail(email).err) return validateEmail(email);
+  if (validatePassword(password).err) return validatePassword(password);
+  const emailExists = await findEmail(email);
+  if (emailExists.err) return emailExists;
 
   const { id } = await User.create({ displayName, email, password, image });
 
