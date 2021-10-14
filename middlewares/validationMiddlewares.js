@@ -22,9 +22,9 @@ const validateEmail = (email) => {
 
 const validatePassword = (password) => {
   if (!password) return { err: { status: 400, message: '"password" is required' } };
-  
+
   if (password.length !== 6) {
-    return { err: { status: 400, message: '"password" must be 6 characteres long' } };
+    return { err: { status: 400, message: '"password" length must be 6 characters long' } };
   }
   return true;
 };
