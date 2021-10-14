@@ -3,14 +3,12 @@ const userService = require('../services/userService');
 const createUser = async (req, res) => {
   try {
     const token = await userService.createUser(req.body);
-
     if (token.err) {
       return res.status(token.err.status).json({ message: token.err.message });
     }
     res.status(201).json({ token });
   } catch (err) {
-    console.log(err.message);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -24,7 +22,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({ token });
   } catch (err) {
     console.log(err.message);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: err.message });
   }
 };
 
