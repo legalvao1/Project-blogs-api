@@ -20,13 +20,19 @@ const findEmail = async (email) => {
 
 const findUser = async (email, password) => {
   const userExistes = await User.findOne({ where: { email, password } });
-  if (userExistes === null) {
+   if (userExistes === null) {
     return { err: {
       status: 400,
       message: 'Invalid fields',
     } };
   }
   return userExistes;
+};
+
+const findAll = async () => {
+  const users = await User.findAll({ 
+    attributes: { exclude: ['password', 'createdAt', 'updatedAt'] } });
+  return users;
 };
 
 const createUser = async ({ displayName, email, password, image }) => {
@@ -42,7 +48,19 @@ const createUser = async ({ displayName, email, password, image }) => {
   return token;
 };
 
+const logUser = async ({ email, password }) => {
+  if (validateEmail(email).err) return validateEmail(email);
+  if (validatePassword(password).err) return validatePassword(password);
+  const userIsValid = await findUser(email, password);
+  if (userIsValid.err) return userIsValid;
+  
+  const token = generateToken(userIsValid.id, email);
+  return token;
+};
+
 module.exports = {
   createUser,
+  findAll,
   findUser,
+  logUser,
 };
