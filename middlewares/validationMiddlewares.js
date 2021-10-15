@@ -63,10 +63,49 @@ const validateCategory = (name) => {
   return true;
 };
 
+const validateCategoryId = (categoryIds) => {
+  if (!categoryIds || categoryIds.length === 0) {
+    return {
+      err: {
+        status: 400,
+        message: '"categoryIds" is required',
+      },
+    };
+  }
+  return true;
+};
+
+const validateTitle = (title) => {
+  if (!title || title === '') {
+    return {
+      err: {
+        status: 400,
+        message: '"title" is required',
+      },
+    };
+  }
+  return true;
+};
+
+const validateContent = (content) => {
+  if (!content || content === '') {
+    return {
+      err: {
+        status: 400,
+        message: '"content" is required',
+      },
+    };
+  }
+  return true;
+};
+
 module.exports = {
   validateName,
   validateEmail,
   validatePassword,
   validateCategory,
+  validateTitle,
+  validateContent,
+  validateCategoryId,
   generateToken,
 };
