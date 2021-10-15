@@ -1,3 +1,4 @@
+/** SOURCE https://sequelize.org/master/manual/model-basics.html#timestamps */
 const BlogPost = (sequelize, DataTypes) => {
   const blogPosts = sequelize.define('BlogPost', {
     title: DataTypes.STRING,
