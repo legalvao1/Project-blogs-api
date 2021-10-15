@@ -17,7 +17,19 @@ const getCategories = async () => {
   return categories;
 };
 
+const findCategoryById = async (id) => {
+  const category = await Category.findByPk(id);
+  if (category === null) {
+    return { err: {
+      status: 400,
+      message: '"categoryIds" not found',
+    } };
+  }
+  return true;
+};
+
 module.exports = {
   createCategory,
   getCategories,
+  findCategoryById,
 };
