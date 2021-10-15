@@ -67,8 +67,32 @@ const getPostById = async ({ id }) => {
   return post;
 };
 
+const editPost = async ({ id }, { title, content, categoryIds }, { id: userId }) => {
+  if (validateTitle(title).err) return validateTitle(title);
+  if (validateContent(content).err) return validateContent(content);
+  if (categoryIds) return { err: { status: 400, message: 'Categories cannot be edited' } };
+
+  const post = await getPostById({ id });
+
+  if (post.userId !== userId) { 
+    return { err: { status: 401, message: 'Unauthorized user' } };
+  }
+
+  await BlogPost.update(
+    { ...BlogPost, title, content },
+    { where: { id } },
+  );
+
+  const updatedPost = await BlogPost.findByPk(id, 
+  { 
+    include: { model: Category, as: 'categories', through: { attributes: [] } },
+  });
+  return updatedPost;
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
+  editPost,
 };
