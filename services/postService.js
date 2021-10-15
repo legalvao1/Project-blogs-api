@@ -1,4 +1,4 @@
-const { BlogPost, User } = require('../models');
+const { BlogPost, User, Category } = require('../models');
 const categoryService = require('./categoryService');
 
 const { 
@@ -12,6 +12,15 @@ const verifyCategories = async (categoryIds) => {
   return (await categoryExist)[0];
 };
 
+const createPostCategory = async (postId, categoryIds) => {
+  const post = await BlogPost.findByPk(postId);
+
+  categoryIds.forEach(async (categoryId) => {
+    const categories = await Category.findByPk(categoryId);
+    await post.addCategories(categories);
+  });
+};
+
 const createPost = async ({ title, content, categoryIds }, { id: userId }) => {
   if (validateTitle(title).err) return validateTitle(title);
   if (validateContent(content).err) return validateContent(content);
@@ -21,13 +30,17 @@ const createPost = async ({ title, content, categoryIds }, { id: userId }) => {
   if (verifyCategory.err) return verifyCategory;
 
   const { id } = await BlogPost.create({ userId, title, content, categoryIds });
+  createPostCategory(id, categoryIds);
   return { id, userId, title, content };
 };
 
 const getPosts = async () => {
   const posts = await BlogPost.findAll(
     { 
-      include: { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      include: [ 
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
     },
   );
   return posts;
