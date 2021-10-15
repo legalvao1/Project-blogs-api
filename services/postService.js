@@ -90,9 +90,23 @@ const editPost = async ({ id }, { title, content, categoryIds }, { id: userId })
   return updatedPost;
 };
 
+const deletePost = async ({ id }, { id: userId }) => {
+  const post = await getPostById({ id });
+
+  if (post.err) return post;
+
+  if (post.userId !== userId) { 
+    return { err: { status: 401, message: 'Unauthorized user' } };
+  }
+
+  const deletedPost = await BlogPost.destroy({ where: { id } });
+  return deletedPost;
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
   editPost,
+  deletePost,
 };
