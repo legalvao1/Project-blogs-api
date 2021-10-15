@@ -8,5 +8,6 @@ router.post('/', validateJWT, postController.createPost);
 router.get('/', validateJWT, postController.getPosts);
 router.get('/:id', validateJWT, postController.getPostById);
 router.put('/:id', validateJWT, postController.editPost);
+router.delete('/:id', validateJWT, postController.deletePost);
 
 module.exports = router;
