@@ -18,21 +18,19 @@ const loginUser = async (req, res) => {
     if (token.err) {
       return res.status(token.err.status).json({ message: token.err.message });
     } 
-    
     res.status(200).json({ token });
   } catch (err) {
-    console.log(err.message);
     res.status(500).json({ message: err.message });
   }
 };
 
 const findAll = async (_req, res) => {
-    try {
-      const users = await userService.findAll();
-      res.status(200).json(users);
-    } catch (err) {
-      res.status(500).send({ message: err.message });
-    }
+  try {
+    const users = await userService.findAll();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
 };
 
 const findById = async (req, res) => {
