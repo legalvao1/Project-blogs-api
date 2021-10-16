@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 const categoryService = require('./categoryService');
 
@@ -29,8 +30,8 @@ const createPost = async ({ title, content, categoryIds }, { id: userId }) => {
   const verifyCategory = await verifyCategories(categoryIds);
   if (verifyCategory.err) return verifyCategory;
 
-  const { id } = await BlogPost.create({ userId, title, content, categoryIds });
-  createPostCategory(id, categoryIds);
+  const { id } = await BlogPost.create({ userId, title, content });
+  await createPostCategory(id, categoryIds);
   return { id, userId, title, content };
 };
 
@@ -102,6 +103,24 @@ const deletePost = async ({ id }, { id: userId }) => {
   const deletedPost = await BlogPost.destroy({ where: { id } });
   return deletedPost;
 };
+/** SOURCE https://sequelize.org/master/manual/model-querying-basics.html#simple-select-queries */
+const getPostBySearchParams = async ({ q }) => {
+  if (q === '') return getPosts();
+
+  const posts = await BlogPost.findAll({
+     where: {
+       [Op.or]: [
+         { title: { [Op.like]: `%${q}%` } },
+         { content: { [Op.like]: `%${q}%` } },
+       ],
+     },
+     include: [ 
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return posts;
+};
 
 module.exports = {
   createPost,
@@ -109,4 +128,5 @@ module.exports = {
   getPostById,
   editPost,
   deletePost,
+  getPostBySearchParams,
 };
