@@ -47,9 +47,22 @@ const findById = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const user = await userService.deleteUser(req.user);
+    if (user !== 1) {
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+    res.sendStatus(204);
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+};
+
 module.exports = {
   createUser,
   loginUser,
   findAll,
   findById,
+  deleteUser,
 };
