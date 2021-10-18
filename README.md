@@ -758,8 +758,8 @@ Para iniciar o desenvolvimento, é necessário clonar o repositório do GitHub, 
 ```shell
 cd "diretorio de sua preferencia"
 
-git clone git@github.com:legalvao1/Project-Cookmaster.git
+git clone git@github.com:legalvao1/Project-blogs-api.git
 
-cd Project-Cookmaster
+cd Project-blogs-api
 
 npm install
