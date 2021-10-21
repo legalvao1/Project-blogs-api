@@ -4,6 +4,25 @@
 
 #### Este projeto faz parte da formação Full Stack da <a href="https://www.betrybe.com/">Trybe</a>.
 
+## Introdução
+
+Neste projeto o objetivo era arquiteturar, desenvolver uma API em `Node.js` de um CRUD (CRIAR, LER, ATUALIZAR E DELETAR) posts de blog (com o sequelize). Começando pela API, desenvolvemos alguns endpoints (seguindo os princípios do REST e SOLID) que estarão conectados ao seu banco de dados.
+
+Primeiro criamos uma tabela para que os usuários pudessem se cadastrar na aplicação, e em seguida uma tabela para cadastrar as Categorias e outra para os Posts.
+O foco do projeto ficou na tabela de Posts onde trazemos as informações do usuário que o criou e as categorias relacionadas a ele através do Associatios do Sequelize.
+
+Para fazer um post é necessário usuário e login, portanto será trabalhada a **relação entre** `user` e `post`. Também será necessário a utlização de categorias para seus posts, assim trabalhando a relação de `posts` para `categorias` e de `categorias` para `posts`.
+
+---
+# Habilidades 
+
+Nesse projeto, você vai construir um back-end usando `ORM` com o pacote `sequelize` do `npm`, e será capaz de:
+ - Criar e associar tabelas usando `models` do `sequelize`
+ - Construir endpoints para consumir os models que criar 
+ - Fazer um `CRUD` com o `ORM`
+
+---
+
 
   - [Lista de Requisitos](#lista-de-requisitos)
     - [1 - Sua aplicação deve ter o endpoint POST `/user`](#1---sua-aplicação-deve-ter-o-endpoint-post-user)
@@ -20,30 +39,6 @@
     - [11 - Sua aplicação deve ter o endpoint DELETE `post/:id`](#11---sua-aplicação-deve-ter-o-endpoint-delete-postid)
     - [12 - Sua aplicação deve ter o endpoint DELETE `/user/me`](#12---sua-aplicação-deve-ter-o-endpoint-delete-userme)
     - [13 - Sua aplicação deve ter o endpoint GET `post/search?q=:searchTerm`](#13---sua-aplicação-deve-ter-o-endpoint-get-postsearchqsearchterm)
-- [Avisos Finais](#avisos-finais)
-
-# Habilidades 
-
-Nesse projeto, você vai construir um back-end usando `ORM` com o pacote `sequelize` do `npm`, e será capaz de:
- - Criar e associar tabelas usando `models` do `sequelize`
- - Construir endpoints para consumir os models que criar 
- - Fazer um `CRUD` com o `ORM`
-
-
-## O que deverá ser desenvolvido
-
-Você vai arquiteturar, desenvolver uma API de um CRUD posts de blog (com o sequelize). Começando pela API, você vai desenvolver alguns endpoints (seguindo os princípios do REST) que estarão conectados ao seu banco de dados. Lembre-se de aplicar os princípios SOLID!
-
-Primeiro, você irá criar uma tabela para os usuários que desejam se cadastrar na aplicação. Após isso, criará também uma tabela de Categorias para seus Posts e por fim a tabela de Posts será seu foco, guardando todas as informações dos posts realizados na plataforma. Essa é apenas uma recomendação!
-
----
-
-## Desenvolvimento
-
-Você deve desenvolver uma aplicação em `Node.js` usando o pacote `sequelize` para fazer um `CRUD` de posts.
-
-Para fazer um post é necessário usuário e login, portanto será trabalhada a **relação entre** `user` e `post`. Também será necessário a utlização de categorias para seus posts, assim trabalhando a relação de `posts` para `categorias` e de `categorias` para `posts`.
- 
 
 ## Lista de Requisitos:
 
